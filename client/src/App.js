@@ -1,25 +1,31 @@
-import logo from "./logo.svg";
 import "./App.css";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Register from "./components/Register";
+import Login from "./components/Login";
+
+import { Switch, Route } from "react-router-dom";
+import { getProfile } from "./JS/actions";
+import PrivateRoute from "./components/PrivateRoute";
+import Profile from "./components/Profile";
 
 function App() {
+  const dispatch = useDispatch();
+
+  // const isAuth = useSelector((state) => state.userReducer.isAuth);
+
+  useEffect(() => {
+    dispatch(getProfile());
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-
-        <Register />
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <Switch>
+          <Route exact path="/" render={() => <Register />} />
+          <Route exact path="/login" render={() => <Login />} />
+          <PrivateRoute path="/profile" component={Profile} />
+        </Switch>
       </header>
     </div>
   );

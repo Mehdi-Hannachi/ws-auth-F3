@@ -24,7 +24,7 @@ passport.use(
 
       console.log(authUser);
 
-      authUser ? done(null, "success") : done(null, false);
+      authUser ? done(null, authUser) : done(null, false);
 
       console.log(done);
     } catch (error) {
